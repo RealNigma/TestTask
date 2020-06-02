@@ -7,5 +7,5 @@ import retrofit2.http.GET
 interface EmployeeAPI {
 
     @GET("65gb/static/raw/master/testTask.json")
-    fun getEmployeesWithSpecialities() : Call<List<EmployeeWithSpecialties>>
+    fun getEmployeesWithSpecialities() : Call<EmployeeResponse>
 }

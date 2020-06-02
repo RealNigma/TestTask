@@ -8,29 +8,32 @@ import androidx.room.TypeConverters
 import com.realnigma.notesapp.Converters
 import kotlinx.coroutines.CoroutineScope
 
-@Database(entities = [Employee::class, Specialty::class], version = 1, exportSchema = false)
+@Database(entities = [Employee::class, Specialty::class], version = 2)
 @TypeConverters(Converters::class)
 abstract class EmployeeDatabase : RoomDatabase() {
 
     abstract fun employeeDao() : EmployeeDao
 
+    companion object {
+
     @Volatile
     private var INSTANCE: EmployeeDatabase? = null
 
-    fun getDatabase(
-        context : Context,
-        scope: CoroutineScope
-    ) : EmployeeDatabase {
-        return INSTANCE ?: synchronized(this) {
-            val instance = Room.databaseBuilder(
-                context.applicationContext,
-                EmployeeDatabase::class.java,
-                "employee_database"
-            )
-                .fallbackToDestructiveMigrationFrom()
-                .build()
-            INSTANCE = instance
-            instance
+        fun getDatabase(
+            context: Context
+        ): EmployeeDatabase {
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    EmployeeDatabase::class.java,
+                    "employee_database"
+                )
+                    .fallbackToDestructiveMigration()
+                    .allowMainThreadQueries()
+                    .build()
+                INSTANCE = instance
+                instance
+            }
         }
     }
 
