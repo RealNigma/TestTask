@@ -26,8 +26,9 @@ class EmployeeRepository(private val employeeDao: EmployeeDao) {
         DaggerEmployeeAPIComponent.create().inject(this)
     }
 
-    val employees: LiveData<List<Employee>> = employeeDao.getAllEmployees()
-    val specialties: LiveData<List<Specialty>> = employeeDao.getAllSpecialties()
+    val employees: LiveData<List<EmployeeWithSpecialties>> = employeeDao.getAllEmployees()
+    val specialties: LiveData<List<SpecialtyWithEmployees>> = employeeDao.getAllSpecialties()
+    val ref: LiveData<List<EmployeeSpecialtyRef>> = employeeDao.getRefData()
     lateinit var remoteResponse : RemoteResponse
 
     @Suppress("RedundantSuspendModifier")
@@ -56,9 +57,16 @@ class EmployeeRepository(private val employeeDao: EmployeeDao) {
                         remoteResponse.avatr_url
                     )
                     val specialties = remoteResponse.specialty
+                    val employeeId : Long
+                    employeeId = employeeDao.insertEmployee(employee)
+
+                    for (specialty : Specialty in specialties) {
+                        val employeeSpecialtyRef = EmployeeSpecialtyRef(employeeId.toInt(), specialty.specialty_id)
+                        employeeDao.insertSpecialty(specialty)
+                        employeeDao.insertRef(employeeSpecialtyRef)
+                    }
                     //employeeDao.insertSpecialty(specialties)
-                    employeeDao.insertEmployeeAndSpecialties(employee, specialties)
-                    //employeeDao.insertEmployee(employee)
+                    //employeeDao.insertEmployeeAndSpecialties(employee, specialties)
                     Log.w("Employee", "inserting data: $employee $specialties")
                 }
             }

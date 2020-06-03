@@ -8,7 +8,7 @@ import androidx.room.TypeConverters
 import com.realnigma.notesapp.Converters
 import kotlinx.coroutines.CoroutineScope
 
-@Database(entities = [Employee::class, Specialty::class], version = 3)
+@Database(entities = [Employee::class, Specialty::class, EmployeeSpecialtyRef::class], version = 4)
 @TypeConverters(Converters::class)
 abstract class EmployeeDatabase : RoomDatabase() {
 

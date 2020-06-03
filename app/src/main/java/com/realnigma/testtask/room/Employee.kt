@@ -8,7 +8,7 @@ import java.util.*
 @Entity
 data class Employee(
     @PrimaryKey(autoGenerate = true) val employee_id : Int,
-    @SerializedName("f_name") val f_name : String?,
+    val f_name : String?,
     val l_name : String?,
     val birthday : Date?,
     val avatr_url : String?

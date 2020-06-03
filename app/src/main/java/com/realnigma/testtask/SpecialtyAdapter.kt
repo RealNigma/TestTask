@@ -5,13 +5,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.realnigma.testtask.room.Specialty
+import com.realnigma.testtask.room.SpecialtyWithEmployees
 import kotlinx.android.synthetic.main.specialty_item.view.*
 
 class SpecialtyAdapter : RecyclerView.Adapter<SpecialtyAdapter.SpecialtyViewHolder>() {
 
-    private var specialties = ArrayList<Specialty>()
+    private var specialties = ArrayList<SpecialtyWithEmployees>()
 
-    fun updateSpecialties(specialties: List<Specialty>) {
+    fun updateSpecialties(specialties: List<SpecialtyWithEmployees>) {
         this.specialties.clear()
         this.specialties.addAll(specialties)
         notifyDataSetChanged()
@@ -38,9 +39,9 @@ class SpecialtyAdapter : RecyclerView.Adapter<SpecialtyAdapter.SpecialtyViewHold
         private val specialtyId = view.specialtyId
         private val specialtyName = view.specialtyName
 
-        fun bind(specialty: Specialty) {
-            specialtyId.text = specialty.specialty_id.toString()
-            specialtyName.text = specialty.name
+        fun bind(specialty: SpecialtyWithEmployees) {
+            specialtyId.text = specialty.specialty.specialty_id.toString()
+            specialtyName.text = specialty.specialty.name
         }
 
     }

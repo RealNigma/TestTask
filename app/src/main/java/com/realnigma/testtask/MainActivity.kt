@@ -30,12 +30,17 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this).get(EmployeeViewModel::class.java)
         viewModel.insertEmployeesAndSpecialties()
         viewModel.specialties.observe(this, Observer { specialities ->
-            Log.w("Employee", "data are right here: $specialities")
+            Log.w("Employee", "Local database specialties: $specialities")
             specialtyAdapter.updateSpecialties(specialities)
         })
 
-        viewModel.employees.observe(this, Observer { specialities ->
-            Log.w("Employee", "data are right here: $specialities")
+        viewModel.employees.observe(this, Observer { employees ->
+            Log.w("Employee", "Local database employees: $employees")
+        })
+
+
+        viewModel.ref.observe(this, Observer { ref ->
+            Log.w("Employee", "Local database ref: $ref")
         })
     }
 
