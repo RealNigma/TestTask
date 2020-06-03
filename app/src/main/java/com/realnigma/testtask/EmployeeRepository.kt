@@ -7,10 +7,7 @@ import com.realnigma.testtask.dagger.DaggerEmployeeAPIComponent
 import com.realnigma.testtask.network.EmployeeAPI
 import com.realnigma.testtask.network.EmployeeResponse
 import com.realnigma.testtask.network.RemoteResponse
-import com.realnigma.testtask.room.Employee
-import com.realnigma.testtask.room.EmployeeDao
-import com.realnigma.testtask.room.EmployeeWithSpecialties
-import com.realnigma.testtask.room.Specialty
+import com.realnigma.testtask.room.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -41,8 +38,8 @@ class EmployeeRepository(private val employeeDao: EmployeeDao) {
         api.getEmployeesWithSpecialities().enqueue(object : Callback<EmployeeResponse> {
             override fun onFailure(call: Call<EmployeeResponse>, t: Throwable) {
                 hasError = true
-                error = t.localizedMessage
-                Log.w("Employee", error!!)
+                error = t.javaClass.toString()
+                Log.w("Employee", "Load error: ${error!!}")
             }
             override fun onResponse(
                 call: Call<EmployeeResponse>,
@@ -55,6 +52,7 @@ class EmployeeRepository(private val employeeDao: EmployeeDao) {
                         0,
                         remoteResponse!!.f_name,
                         remoteResponse.l_name,
+                        remoteResponse.birthday,
                         remoteResponse.avatr_url
                     )
                     val specialties = remoteResponse.specialty

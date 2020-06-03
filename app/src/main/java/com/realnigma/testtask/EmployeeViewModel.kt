@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.realnigma.testtask.room.Employee
 import com.realnigma.testtask.room.EmployeeDatabase
+import com.realnigma.testtask.room.EmployeeSpecialtyRef
 import com.realnigma.testtask.room.Specialty
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
