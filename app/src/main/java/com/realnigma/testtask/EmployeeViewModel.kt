@@ -4,6 +4,7 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.realnigma.testtask.room.*
 import kotlinx.coroutines.Dispatchers
@@ -15,6 +16,7 @@ class EmployeeViewModel (application: Application) : AndroidViewModel(applicatio
     val specialties : LiveData<List<SpecialtyWithEmployees>>
     val employees : LiveData<List<EmployeeWithSpecialties>>
     val ref : LiveData<List<EmployeeSpecialtyRef>>
+    var specialtyId = MutableLiveData<Int>()
 
     init {
         val employeeDao = EmployeeDatabase.getDatabase(application).employeeDao()

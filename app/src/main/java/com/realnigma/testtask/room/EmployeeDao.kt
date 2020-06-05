@@ -34,6 +34,6 @@ interface EmployeeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertEmployeeAndSpecialties(employee: Employee, specialties: List<Specialty>)
 
-    @Query("DELETE from employee")
+    @Query("DELETE FROM employee")
     fun deleteAll()
 }

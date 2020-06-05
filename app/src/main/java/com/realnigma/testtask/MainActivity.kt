@@ -1,28 +1,29 @@
 package com.realnigma.testtask
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.realnigma.testtask.room.EmployeeDao
-import kotlinx.android.synthetic.main.activity_main.*
+
+
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: EmployeeViewModel
     private var specialtyAdapter = SpecialtyAdapter()
+    private val TAG = "MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initViewModel()
-        initRecyclerView()
+        //initRecyclerView()
+
+
+
     }
 
     private fun initViewModel() {
@@ -30,25 +31,23 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this).get(EmployeeViewModel::class.java)
         viewModel.insertEmployeesAndSpecialties()
         viewModel.specialties.observe(this, Observer { specialities ->
-            Log.w("Employee", "Local database specialties: $specialities")
+            Log.w(TAG, "Local database specialties: $specialities")
             specialtyAdapter.updateSpecialties(specialities)
         })
 
         viewModel.employees.observe(this, Observer { employees ->
-            Log.w("Employee", "Local database employees: $employees")
+            Log.w(TAG, "Local database employees: $employees")
         })
 
 
         viewModel.ref.observe(this, Observer { ref ->
-            Log.w("Employee", "Local database ref: $ref")
+            Log.w(TAG, "Local database ref: $ref")
+        })
+
+        viewModel.specialtyId.observe(this, Observer { id ->
+            //showEmployeeFragment()
+            Log.w(TAG, "Local database specialtyId: $id")
         })
     }
 
-    private fun initRecyclerView() {
-        specialtyRecyclerView.apply {
-            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-            addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
-            adapter = specialtyAdapter
-        }
-    }
 }

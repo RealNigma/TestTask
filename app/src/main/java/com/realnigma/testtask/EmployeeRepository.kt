@@ -65,8 +65,6 @@ class EmployeeRepository(private val employeeDao: EmployeeDao) {
                         employeeDao.insertSpecialty(specialty)
                         employeeDao.insertRef(employeeSpecialtyRef)
                     }
-                    //employeeDao.insertSpecialty(specialties)
-                    //employeeDao.insertEmployeeAndSpecialties(employee, specialties)
                     Log.w("Employee", "inserting data: $employee $specialties")
                 }
             }
