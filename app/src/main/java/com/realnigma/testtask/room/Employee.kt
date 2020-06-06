@@ -2,7 +2,6 @@ package com.realnigma.testtask.room
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
 import java.util.*
 
 @Entity

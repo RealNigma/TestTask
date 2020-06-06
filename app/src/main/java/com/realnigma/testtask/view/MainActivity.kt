@@ -1,29 +1,26 @@
-package com.realnigma.testtask
+package com.realnigma.testtask.view
 
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-
+import com.realnigma.testtask.viewmodel.EmployeeViewModel
+import com.realnigma.testtask.R
+import com.realnigma.testtask.view.adapter.SpecialtyAdapter
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: EmployeeViewModel
-    private var specialtyAdapter = SpecialtyAdapter()
+    private var specialtyAdapter =
+        SpecialtyAdapter()
     private val TAG = "MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initViewModel()
-        //initRecyclerView()
-
-
-
     }
 
     private fun initViewModel() {
@@ -35,19 +32,16 @@ class MainActivity : AppCompatActivity() {
             specialtyAdapter.updateSpecialties(specialities)
         })
 
-        viewModel.employees.observe(this, Observer { employees ->
-            Log.w(TAG, "Local database employees: $employees")
-        })
-
-
-        viewModel.ref.observe(this, Observer { ref ->
-            Log.w(TAG, "Local database ref: $ref")
-        })
-
         viewModel.specialtyId.observe(this, Observer { id ->
-            //showEmployeeFragment()
+            viewModel.getSpecialtyById(id)
             Log.w(TAG, "Local database specialtyId: $id")
         })
+
+        viewModel.employeeId.observe(this, Observer { id ->
+            viewModel.getEmployeeById(id)
+            Log.w(TAG, "Local database employeeId: $id")
+        })
+
     }
 
 }

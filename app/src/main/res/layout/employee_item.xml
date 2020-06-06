@@ -15,25 +15,28 @@
     android:layout_marginTop="8dp">
 
     <TextView
-        android:id="@+id/specialtyId"
-        android:layout_width="wrap_content"
+        android:id="@+id/fullName"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:gravity="center"
         android:lines="1"
-        tools:text="101"
+        tools:text="Иван Иванов"
+        android:layout_weight="0.5"
         android:textSize="15sp" />
 
     <TextView
-        android:id="@+id/specialtyName"
+        android:id="@+id/age"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:lines="1"
-        android:layout_weight="1"
         android:gravity="center"
+        android:layout_weight="0.5"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        tools:text="Manager"
+        tools:text="45 лет"
         android:textSize="15sp"
         />
 

@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".EmployeeFragment">
+    tools:context=".view.fragment.EmployeeFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/employeeRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/specialty_item"
+        tools:listitem="@layout/employee_item"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

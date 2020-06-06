@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/specialtyFragment"
-        android:name="com.realnigma.testtask.SpecialtyFragment"
+        android:name="com.realnigma.testtask.view.fragment.SpecialtyFragment"
         android:label="fragment_specialty"
         tools:layout="@layout/fragment_specialty" >
         <action
@@ -16,7 +16,16 @@
     </fragment>
     <fragment
         android:id="@+id/employeeFragment"
-        android:name="com.realnigma.testtask.EmployeeFragment"
+        android:name="com.realnigma.testtask.view.fragment.EmployeeFragment"
         android:label="fragment_employee"
-        tools:layout="@layout/fragment_employee" />
+        tools:layout="@layout/fragment_employee" >
+        <action
+            android:id="@+id/action_employeeFragment_to_employeeDescriptionFragment"
+            app:destination="@id/employeeDescriptionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/employeeDescriptionFragment"
+        android:name="com.realnigma.testtask.view.fragment.EmployeeDescriptionFragment"
+        android:label="fragment_employee_description"
+        tools:layout="@layout/fragment_employee_description" />
 </navigation>

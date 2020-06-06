@@ -1,6 +1,6 @@
 package com.realnigma.testtask.dagger
 
-import com.realnigma.testtask.EmployeeRepository
+import com.realnigma.testtask.repository.EmployeeRepository
 import dagger.Component
 import javax.inject.Singleton
 

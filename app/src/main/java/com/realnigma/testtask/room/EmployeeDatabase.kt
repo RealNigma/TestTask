@@ -5,10 +5,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.realnigma.notesapp.Converters
+import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-@Database(entities = [Employee::class, Specialty::class, EmployeeSpecialtyRef::class], version = 4)
+@Database(entities = [Employee::class, Specialty::class, EmployeeSpecialtyRef::class], version = 5)
 @TypeConverters(Converters::class)
 abstract class EmployeeDatabase : RoomDatabase() {
 
@@ -20,7 +22,8 @@ abstract class EmployeeDatabase : RoomDatabase() {
     private var INSTANCE: EmployeeDatabase? = null
 
         fun getDatabase(
-            context: Context
+            context: Context,
+            scope: CoroutineScope
         ): EmployeeDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
@@ -29,10 +32,24 @@ abstract class EmployeeDatabase : RoomDatabase() {
                     "employee_database"
                 )
                     .fallbackToDestructiveMigration()
+                    .addCallback(EmployeeDatabaseCallback(scope))
                     .allowMainThreadQueries()
                     .build()
                 INSTANCE = instance
                 instance
+            }
+        }
+    }
+
+    private class EmployeeDatabaseCallback(
+        private val scope: CoroutineScope
+    ) : RoomDatabase.Callback() {
+        override fun onOpen(db: SupportSQLiteDatabase) {
+            super.onOpen(db)
+            INSTANCE?.let { database ->
+                scope.launch(Dispatchers.IO) {
+                    database.clearAllTables()
+                }
             }
         }
     }
