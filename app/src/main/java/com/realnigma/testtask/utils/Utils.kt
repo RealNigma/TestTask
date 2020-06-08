@@ -27,38 +27,44 @@ fun  convertDate(date: Date): String {
 
 @SuppressLint("DefaultLocale")
 fun getFullName(firstName: String?, lastName : String?) : String {
-    val formatedFirstName = firstName?.toLowerCase()?.capitalize()
-    val formatedLastName = lastName?.toLowerCase()?.capitalize()
-    return "$formatedFirstName $formatedLastName"
+    val formattedFirstName = firstName?.toLowerCase()?.capitalize()
+    val formattedLastName = lastName?.toLowerCase()?.capitalize()
+    return "$formattedFirstName $formattedLastName"
 }
 
 fun calculateAge(date : Date?): String {
+
     if (date == null) return "««"
+
     val ageDate = Calendar.getInstance()
-    val todayDate = Calendar.getInstance()
     ageDate.time = date
+
     val year = ageDate[Calendar.YEAR]
     val month = ageDate[Calendar.MONTH]
     val day = ageDate[Calendar.DAY_OF_MONTH]
-
     ageDate[year, month + 1] = day
-    var age = todayDate[Calendar.YEAR] - ageDate[Calendar.YEAR]
 
+    val todayDate = Calendar.getInstance()
+    var age = todayDate[Calendar.YEAR] - ageDate[Calendar.YEAR]
     if (todayDate[Calendar.DAY_OF_YEAR] < ageDate[Calendar.DAY_OF_YEAR]) {
         age--
     }
 
-    val ageString = age.toString()
-    var yearsText = "лет"
-    val lastIndex = ageString.lastIndex
-           when {
-               ageString[lastIndex] == '1' -> yearsText = "год"
-               ageString[lastIndex] in '2'..'4' -> yearsText = "года"
-               (ageString[lastIndex] == '0'
-                       || ageString[1] in '5'..'9') -> yearsText = "лет"
-           }
+    val yearsText = getYearsText(age.toString())
 
     return "$age $yearsText"
+}
+
+private fun getYearsText(ageString: String): String {
+    var yearsText = "лет"
+    val lastIndex = ageString.lastIndex
+    when {
+        ageString[lastIndex] == '1' -> yearsText = "год"
+        ageString[lastIndex] in '2'..'4' -> yearsText = "года"
+        (ageString[lastIndex] == '0'
+                || ageString[1] in '5'..'9') -> yearsText = "лет"
+    }
+    return yearsText
 }
 
 open class DateDeserializer : JsonDeserializer<Date?> {
